@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useForm } from '../hooks/useForm'
 
 function Copyright() {
   return (
@@ -46,6 +47,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const { form, onChange } = useForm({ name: "", email: "", nickname: "", password: ""})
+
+  const handleInputChange = (event) => {
+      const { value, name } = event.target
+
+      onChange(value, name)
+  }
+
+  const onSubmitForm = (event) => {
+      event.preventDefault()
+      console.log(form)
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -57,12 +70,15 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={onSubmitForm} >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="name"
-                name="name"
+                type={"text"}
+                name={"name"}
+                value={form.name}
+                onChange={handleInputChange}
+                autoComplete="name"                
                 variant="outlined"
                 required
                 fullWidth
@@ -73,34 +89,42 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                type={"text"}
+                name={"nickname"}
+                value={form.nickname}
+                onChange={handleInputChange}
                 variant="outlined"
                 required
                 fullWidth
                 id="lastName"
                 label="Nickname"
-                name="nickname"
                 autoComplete="nickname"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                type={"text"}
+                name={"email"}
+                value={form.email}
+                onChange={handleInputChange}
                 variant="outlined"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
-                name="email"
+                label="Email"
                 autoComplete="email"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                type={"password"}
+                name={"password"}
+                value={form.password}
+                onChange={handleInputChange}
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
                 label="Password"
-                type="password"
                 id="password"
                 autoComplete="current-password"
               />
@@ -118,7 +142,7 @@ export default function SignUp() {
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="#" variant="body2">
-                Already have an account? Sign in
+                Já tem uma conta? Entrar
               </Link>
             </Grid>
           </Grid>
