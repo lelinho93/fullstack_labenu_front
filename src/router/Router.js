@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Login from "../components/Login";
+import SignUp from "../components/SignUp";
 
 
 
@@ -12,8 +13,8 @@ function Router() {
                 <Route exact path= "/">
                     <Login/>
                 </Route>
-                <Route exact path="/">
-                    
+                <Route exact path="/signup">
+                    <SignUp/>
                 </Route>
             </Switch>
         </BrowserRouter>
