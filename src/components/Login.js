@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: 'url(https://www.spartabrasil.com/wp-content/uploads/dicas-videos-blog-sparta.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+      theme.palette.type === 'light' ? theme.palette.grey[2] : theme.palette.grey[900],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
@@ -60,6 +61,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
   const classes = useStyles();
+  const history = useHistory();
+
   const { form, onChange } = useForm({ email: "", password: ""})
 
   const handleInputChange = (event) => {
@@ -73,6 +76,10 @@ function Login() {
       console.log(form)
   }
 
+  const goToSignup = () => {
+    history.push("/signup")
+  }
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -83,7 +90,7 @@ function Login() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Login
           </Typography>
           <form className={classes.form} onSubmit={onSubmitForm}>
             <TextField
@@ -133,7 +140,7 @@ function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2" onClick={goToSignup}>
                   {"Não tem uma conta? Cadastre-se!"}
                 </Link>
               </Grid>

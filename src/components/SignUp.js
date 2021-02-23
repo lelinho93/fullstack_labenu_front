@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom'
+import { useForm } from '../hooks/useForm'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useForm } from '../hooks/useForm'
+
 
 function Copyright() {
   return (
@@ -47,6 +49,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const history = useHistory()
+
   const { form, onChange } = useForm({ name: "", email: "", nickname: "", password: ""})
 
   const handleInputChange = (event) => {
@@ -58,6 +62,10 @@ export default function SignUp() {
   const onSubmitForm = (event) => {
       event.preventDefault()
       console.log(form)
+  }
+
+  const goToLogin = () => {
+      history.push("/")
   }
 
   return (
@@ -141,7 +149,7 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="#" variant="body2" onClick={goToLogin}>
                 Já tem uma conta? Entrar
               </Link>
             </Grid>
