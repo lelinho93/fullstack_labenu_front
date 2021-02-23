@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useForm } from '../hooks/useForm'
 
 function Copyright() {
   return (
@@ -59,6 +60,18 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
   const classes = useStyles();
+  const { form, onChange } = useForm({ email: "", password: ""})
+
+  const handleInputChange = (event) => {
+      const { value, name } = event.target
+
+      onChange(value, name)
+  }
+
+  const onSubmitForm = (event) => {
+      event.preventDefault()
+      console.log(form)
+  }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -72,26 +85,31 @@ function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={onSubmitForm}>
             <TextField
+              type={"text"}
+              name={"email"}
+              value={form.email}
+              onChange={handleInputChange}
               variant="outlined"
               margin="normal"
               required
               fullWidth
               id="email"
               label="Email ou Nickname"
-              name="email"
               autoComplete="email"
               autoFocus
             />
             <TextField
+              type={"password"}
+              name={"password"}
+              value={form.password}
+              onChange={handleInputChange}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="password"
               label="Senha"
-              type="password"
               id="password"
               autoComplete="current-password"
             />
