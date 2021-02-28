@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 
 function Copyright() {
@@ -34,6 +35,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  image: {
+    backgroundImage: 'url(https://wallpapercave.com/wp/wp6975861.jpg)',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor:
+      theme.palette.type === 'light' ? theme.palette.grey[2] : theme.palette.grey[900],
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'},
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.primary.main,
@@ -59,10 +67,19 @@ export default function SignUp() {
       onChange(value, name)
   }
 
-  const onSubmitForm = (event) => {
-      event.preventDefault()
-      console.log(form)
+
+  const onSubmitForm = (event) => {    
+      event.preventDefault() 
+      axios.post("http://localhost:3306/user/signup", form)
+    .then(response => {
+        alert("Cadastro efetuado!")    
+    })
+    .catch(error => {
+        console.log(error.response.data)
+    })     
   }
+
+  
 
   const goToLogin = () => {
       history.push("/")

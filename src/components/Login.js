@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://www.spartabrasil.com/wp-content/uploads/dicas-videos-blog-sparta.jpg)',
+    backgroundImage: 'url(https://wallpapercave.com/wp/wp6975861.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[2] : theme.palette.grey[900],
@@ -67,13 +68,19 @@ function Login() {
 
   const handleInputChange = (event) => {
       const { value, name } = event.target
-
       onChange(value, name)
   }
 
   const onSubmitForm = (event) => {
       event.preventDefault()
-      console.log(form)
+      axios.post("http://localhost:3306/user/login", form)
+      .then(response => {
+        alert(response.data)
+      })
+      .catch(error => {
+        console.log(error.response.data)
+      })
+      
   }
 
   const goToSignup = () => {
