@@ -72,14 +72,13 @@ export default function SignUp() {
       event.preventDefault() 
       axios.post("http://localhost:3306/user/signup", form)
     .then(response => {
-        alert("Cadastro efetuado!")    
+      window.localStorage.setItem("token", response.data.token)
+      history.push("/insert-image")  
     })
     .catch(error => {
         console.log(error.response.data)
     })     
-  }
-
-  
+  }  
 
   const goToLogin = () => {
       history.push("/")

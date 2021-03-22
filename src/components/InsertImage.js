@@ -1,20 +1,18 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from '../hooks/useForm'
+import axios from 'axios'
 
 function Copyright() {
   return (
@@ -34,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://wallpapercave.com/wp/wp6975861.jpg)',
+    backgroundImage: 'url(https://source.unsplash.com/random)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
-    theme.palette.type === 'light' ? theme.palette.grey[2] : theme.palette.grey[900],
+      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
@@ -60,11 +58,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login() {
+export default function InsertImage() {
   const classes = useStyles();
-  const history = useHistory();
+  const history = useHistory()
 
-  const { form, onChange } = useForm({ email: "", password: ""})
+  const { form, onChange } = useForm({ subtitle: "", file: "", tags: "", collection: ""})
+
+  console.log(form)
 
   const handleInputChange = (event) => {
       const { value, name } = event.target
@@ -72,21 +72,16 @@ function Login() {
   }
 
   const onSubmitForm = (event) => {
-      event.preventDefault()
-      axios.post("http://localhost:3306/user/login", form)
-      .then(response => {
-        window.localStorage.setItem("token", response.data.token)
-        history.push("/insert-image")
-      })
-      .catch(error => {
-        console.log(error.response.data)
-      })
-      
-  }
-
-  const goToSignup = () => {
-    history.push("/signup")
-  }
+    event.preventDefault()
+    axios.post("http://localhost:3306/image", form)
+    .then(response => {
+      alert(response.data)
+    })
+    .catch(error => {
+      console.log(error.response.data)
+    })
+    
+}
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -95,43 +90,61 @@ function Login() {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+            <InsertPhotoIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Login
+            Inserir imagem
           </Typography>
-          <form className={classes.form} onSubmit={onSubmitForm}>
+          <form className={classes.form} onSubmit={onSubmitForm} >
             <TextField
-              type={"text"}
-              name={"email"}
-              value={form.email}
-              onChange={handleInputChange}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email ou Nickname"
-              autoComplete="email"
+              id="subtitle"
+              label="Legenda"
+              name="subtitle"
+              autoComplete="subtitle"
               autoFocus
+              onChange={handleInputChange}
             />
             <TextField
-              type={"password"}
-              name={"password"}
-              value={form.password}
-              onChange={handleInputChange}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              label="Senha"
-              id="password"
-              autoComplete="current-password"
+              name="file"
+              label="Link da imagem"
+              type="text"
+              id="file"
+              autoComplete="file"
+              onChange={handleInputChange}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Lembrar-me"
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="tags"
+              label="Tags"
+              type="text"
+              id="tags"
+              autoComplete="tags"
+              onChange={handleInputChange}
             />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="collection"
+              label="Coleção"
+              type="text"
+              id="collection"
+              autoComplete="collection"
+              onChange={handleInputChange}
+            />
+           
             <Button
               type="submit"
               fullWidth
@@ -139,19 +152,15 @@ function Login() {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Inserir imagem
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Esqueceu sua senha?
+                  Logout
                 </Link>
               </Grid>
-              <Grid item>
-                <Link href="#" variant="body2" onClick={goToSignup}>
-                  {"Não tem uma conta? Cadastre-se!"}
-                </Link>
-              </Grid>
+              
             </Grid>
             <Box mt={5}>
               <Copyright />
@@ -162,4 +171,3 @@ function Login() {
     </Grid>
   );
 }
-export default Login;
