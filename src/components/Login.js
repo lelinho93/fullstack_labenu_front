@@ -76,7 +76,7 @@ function Login() {
       axios.post("http://localhost:3306/user/login", form)
       .then(response => {
         window.localStorage.setItem("token", response.data.token)
-        history.push("/insert-image")
+        history.push("/timeline")
       })
       .catch(error => {
         console.log(error.response.data)

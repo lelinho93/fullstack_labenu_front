@@ -64,16 +64,18 @@ export default function InsertImage() {
 
   const { form, onChange } = useForm({ subtitle: "", file: "", tags: "", collection: ""})
 
-  console.log(form)
-
-  const handleInputChange = (event) => {
+   const handleInputChange = (event) => {
       const { value, name } = event.target
       onChange(value, name)
   }
 
   const onSubmitForm = (event) => {
     event.preventDefault()
-    axios.post("http://localhost:3306/image", form)
+    axios.post("http://localhost:3306/image", form, {
+        headers: {
+            Authorization: localStorage.getItem("token")
+        }
+    })
     .then(response => {
       alert(response.data)
     })
@@ -82,7 +84,6 @@ export default function InsertImage() {
     })
     
 }
-
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -143,8 +144,7 @@ export default function InsertImage() {
               id="collection"
               autoComplete="collection"
               onChange={handleInputChange}
-            />
-           
+            />           
             <Button
               type="submit"
               fullWidth
@@ -152,20 +152,12 @@ export default function InsertImage() {
               color="primary"
               className={classes.submit}
             >
-              Inserir imagem
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Logout
-                </Link>
-              </Grid>
-              
-            </Grid>
+              Postar
+            </Button>            
+          </form>          
             <Box mt={5}>
               <Copyright />
             </Box>
-          </form>
         </div>
       </Grid>
     </Grid>
