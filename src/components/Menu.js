@@ -16,7 +16,7 @@ function TabPanel(props) {
   const history = useHistory()
 
   if(!localStorage.getItem("token")){
-      history.push("/login")
+      history.push("/")
   }
 
   return (
@@ -63,7 +63,7 @@ function LinkTab(props) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 0,
     backgroundColor: theme.palette.background.paper,
   },
 }));

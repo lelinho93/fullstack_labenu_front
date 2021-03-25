@@ -76,7 +76,8 @@ export default function SignUp() {
       history.push("/insert-image")  
     })
     .catch(error => {
-        console.log(error.response.data)
+      const { data } = error.response
+      alert(data.message)
     })     
   }  
 

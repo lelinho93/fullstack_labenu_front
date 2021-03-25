@@ -4,28 +4,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from '../hooks/useForm'
 import axios from 'axios'
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://www.linkedin.com/in/wesley-aquino-5880841b9/">
-        Wesley Aquino Developer
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,6 +47,10 @@ export default function InsertImage() {
   const classes = useStyles();
   const history = useHistory()
 
+  if(!localStorage.getItem("token")){
+    history.push("/")
+}
+
   const { form, onChange } = useForm({ subtitle: "", file: "", tags: "", collection: ""})
 
    const handleInputChange = (event) => {
@@ -80,7 +69,8 @@ export default function InsertImage() {
       alert(response.data)
     })
     .catch(error => {
-      console.log(error.response.data)
+      const { data } = error.response
+      alert(data.message)
     })
     
 }
@@ -154,10 +144,8 @@ export default function InsertImage() {
             >
               Postar
             </Button>            
-          </form>          
-            <Box mt={5}>
-              <Copyright />
-            </Box>
+          </form>                  
+            
         </div>
       </Grid>
     </Grid>

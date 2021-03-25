@@ -79,7 +79,8 @@ function Login() {
         history.push("/timeline")
       })
       .catch(error => {
-        console.log(error.response.data)
+        const { data } = error.response
+        alert(data.message)
       })
       
   }
@@ -98,7 +99,7 @@ function Login() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Login
+            ArtiLogin
           </Typography>
           <form className={classes.form} onSubmit={onSubmitForm}>
             <TextField
